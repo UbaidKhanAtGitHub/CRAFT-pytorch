@@ -126,8 +126,9 @@ if __name__ == '__main__':
     print('Loading weights from checkpoint (' + args.trained_model + ')')
     if args.cuda:
         net.load_state_dict(copyStateDict(torch.load(args.trained_model)))
-    else:
-        net.load_state_dict(copyStateDict(torch.load(args.trained_model, map_location='cpu')))
+    else:        
+        # use torch.load with map_location=torch.device('cpu') instead of map_location='cpu'
+        net.load_state_dict(copyStateDict(torch.load(args.trained_model, map_location=torch.device('cpu'))))
 
     if args.cuda:
         net = net.cuda()
